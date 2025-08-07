@@ -12,7 +12,7 @@ public class Program
         builder.Services.AddSwaggerGen(); 
         #endregion
 
-        var app = builder.Build();
+        var app = builder.Build(); 
 
         #region Configure the HTTP request pipeline.
 
