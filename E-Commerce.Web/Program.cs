@@ -9,10 +9,17 @@ public class Program
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen(); 
+        builder.Services.AddSwaggerGen();
+        builder.Services.AddDbContext<StoredDbContext>(options =>
+        {
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            options.UseSqlServer(connectionString);
+        });
+        builder.Services.AddScoped<IDbInitializer, DbInitializer>();
         #endregion
 
-        var app = builder.Build(); 
+        var app = builder.Build();
+        InitializeDb(app);
 
         #region Configure the HTTP request pipeline.
 
@@ -32,4 +39,13 @@ public class Program
 
         app.Run();
     }
+    public static void InitializeDb(WebApplication app)
+    {
+        // Create scope 
+        var scope = app.Services.CreateScope();
+        var dbInitializer = scope.ServiceProvider
+            .GetRequiredService<IDbInitializer>();
+        dbInitializer.Initialize();
+    } 
 }
+
