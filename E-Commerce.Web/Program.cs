@@ -1,7 +1,8 @@
+using ServicesAbstraction;
 namespace E_Commerce.Web;
 public class Program
 {
-    public static void Main(string[] args)
+    public async static Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +17,18 @@ public class Program
             options.UseSqlServer(connectionString);
         });
         builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+        builder.Services.AddAutoMapper(config =>
+        {
+            config.AddMaps(typeof(AssemblyReference).Assembly);
+        },
+        typeof(AssemblyReference).Assembly);
+        builder.Services.AddScoped<IServiceManager, ServiceManager>();
         #endregion
 
         var app = builder.Build();
-        InitializeDb(app);
+
+        await app.InitializeDbAsync(); 
 
         #region Configure the HTTP request pipeline.
 
@@ -31,21 +40,14 @@ public class Program
 
         app.UseHttpsRedirection();
 
-        app.UseAuthorization();
+        app.UseStaticFiles();
 
+        app.UseAuthorization();
 
         app.MapControllers(); 
         #endregion
 
         app.Run();
     }
-    public static void InitializeDb(WebApplication app)
-    {
-        // Create scope 
-        var scope = app.Services.CreateScope();
-        var dbInitializer = scope.ServiceProvider
-            .GetRequiredService<IDbInitializer>();
-        dbInitializer.Initialize();
-    } 
 }
 

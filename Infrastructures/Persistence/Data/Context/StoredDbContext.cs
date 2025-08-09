@@ -8,6 +8,6 @@ public class StoredDbContext(DbContextOptions options) : DbContext(options)
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); // Open-Closed Principle
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AssemblyReference).Assembly); // Open-Closed Principle
     }
 }
