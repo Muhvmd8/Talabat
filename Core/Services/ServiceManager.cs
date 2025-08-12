@@ -1,5 +1,4 @@
-﻿using ServicesAbstraction;
-namespace Services;
+﻿namespace Services;
 public class ServiceManager(IUnitOfWork unitOfWork, IMapper mapper) : IServiceManager
 {
     private readonly Lazy<IProductService> _lazyProductService = 

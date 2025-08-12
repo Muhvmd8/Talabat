@@ -1,11 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
-using ServicesAbstractions;
-using Shared.DataTransferObjects.ProductDTO;
-
 namespace E_Commerce.Web.Controllers;
-
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]
@@ -14,16 +9,11 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
-    private readonly IProductService _productService;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, IProductService productService)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger)
     {
         _logger = logger;
-        _productService = productService;
     }
-
-    [HttpGet("products")]
-    public async Task<IEnumerable<ProductResponse>> GetAllProducts() => await _productService.GetAllProductsAsync();
 
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()

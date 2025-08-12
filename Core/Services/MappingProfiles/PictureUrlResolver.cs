@@ -1,5 +1,4 @@
-﻿global using Microsoft.Extensions.Configuration;
-internal class PictureUrlResolver(IConfiguration configuration)
+﻿internal class PictureUrlResolver(IConfiguration configuration)
     : IValueResolver<Product, ProductResponse, string>
 {
     public string Resolve(Product source, ProductResponse destination, string destMember, ResolutionContext context)

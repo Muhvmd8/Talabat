@@ -1,4 +1,5 @@
-using ServicesAbstraction;
+using Domain.Models.ProductModule;
+
 namespace E_Commerce.Web;
 public class Program
 {
@@ -26,7 +27,11 @@ public class Program
         builder.Services.AddScoped<IServiceManager, ServiceManager>();
         #endregion
 
-        var app = builder.Build();
+        IEnumerable<ProductBrand> productBrands;
+        productBrands = [];
+        productBrands.Where(p => p.Id == 10).Select(p => p.Name);
+
+        var app = builder.Build(); 
 
         await app.InitializeDbAsync(); 
 
@@ -48,6 +53,8 @@ public class Program
         #endregion
 
         app.Run();
+
+
     }
 }
 
