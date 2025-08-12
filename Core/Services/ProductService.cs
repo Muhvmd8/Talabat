@@ -3,9 +3,9 @@ using Shared;
 namespace Services;
 public class ProductService(IUnitOfWork unitOfWork, IMapper mapper) : IProductService
 {
-    public async Task<IEnumerable<ProductResponse>> GetAllProductsAsync(int? brandId, int? typeId, ProductSortingOptions option)
+    public async Task<IEnumerable<ProductResponse>> GetAllProductsAsync(ProductQueryParameters queryParameters)
     {
-        var specifications = new ProductWithBrandAndTypeSpecifications(brandId, typeId, option);
+        var specifications = new ProductWithBrandAndTypeSpecifications(queryParameters);
         var products = await unitOfWork.GetRepository<Product, int>().GetAllAsync(specifications);
         // Map from 'Product' to 'ProductResponse'
         var productsResponse = mapper.Map< IEnumerable <Product>, IEnumerable<ProductResponse>>(products);

@@ -1,4 +1,4 @@
-﻿using Domain.Models;
+﻿global using Domain.Models;
 namespace Services.Specifications;
 public class BaseSpecifications<TEntity, TKey>
     : ISpecifications<TEntity, TKey>
@@ -11,7 +11,6 @@ public class BaseSpecifications<TEntity, TKey>
     public Expression<Func<TEntity, bool>> Criteria { get; private set; }
     #region Include
     public List<Expression<Func<TEntity, object>>> Includes { get; } = [];
-
     protected void _AddInculdes(Expression<Func<TEntity, object>> include)
         => Includes.Add(include);
     #endregion
@@ -21,5 +20,4 @@ public class BaseSpecifications<TEntity, TKey>
     protected void _AddOrderBy(Expression<Func<TEntity, object>> orderByExpression) => OrderBy = orderByExpression;
     protected void _AddOrderByDescending(Expression<Func<TEntity, object>> orderByDescExpression) => OrderByDescending = orderByDescExpression;
     #endregion
-
 }

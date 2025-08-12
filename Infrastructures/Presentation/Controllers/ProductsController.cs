@@ -1,18 +1,13 @@
-﻿global using Microsoft.AspNetCore.Mvc;
-global using ServicesAbstraction;
-global using Shared.DataTransferObjects.ProductDTO;
-using Microsoft.Extensions.Options;
-using Shared;
-namespace Presentation.Controllers;
+﻿namespace Presentation.Controllers;
 [ApiController]
 [Route("api/[Controller]")] 
 public class ProductsController(IServiceManager serviceManager)
     : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAllProducts(int? brandId, int? typeId, ProductSortingOptions option)
+    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAllProducts(ProductQueryParameters queryParameters)
     {
-        var products = await serviceManager.ProductService.GetAllProductsAsync(brandId, typeId, option);
+        var products = await serviceManager.ProductService.GetAllProductsAsync(queryParameters);
         return Ok(products);
     }
     [HttpGet("{id}")]
