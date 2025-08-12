@@ -1,10 +1,11 @@
 ﻿global using Services.Specifications;
+using Shared;
 namespace Services;
 public class ProductService(IUnitOfWork unitOfWork, IMapper mapper) : IProductService
 {
-    public async Task<IEnumerable<ProductResponse>> GetAllProductsAsync(int? brandId, int? typeId)
+    public async Task<IEnumerable<ProductResponse>> GetAllProductsAsync(int? brandId, int? typeId, ProductSortingOptions option)
     {
-        var specifications = new ProductWithBrandAndTypeSpecifications(brandId, typeId);
+        var specifications = new ProductWithBrandAndTypeSpecifications(brandId, typeId, option);
         var products = await unitOfWork.GetRepository<Product, int>().GetAllAsync(specifications);
         // Map from 'Product' to 'ProductResponse'
         var productsResponse = mapper.Map< IEnumerable <Product>, IEnumerable<ProductResponse>>(products);

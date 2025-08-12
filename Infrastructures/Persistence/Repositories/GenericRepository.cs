@@ -1,7 +1,7 @@
 ﻿namespace Persistence.Repositories;
 public class GenericRepository<TEntity, TKey>(StoredDbContext _dbContext)
     : IGenericRepository<TEntity, TKey>
-    where TEntity : BaseEntity<TKey>
+      where TEntity : BaseEntity<TKey>
 {
     public async Task<IEnumerable<TEntity>> GetAllAsync() => await _dbContext.Set<TEntity>().ToListAsync();
     public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity, TKey> specifications)

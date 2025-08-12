@@ -1,6 +1,8 @@
 ﻿global using Microsoft.AspNetCore.Mvc;
 global using ServicesAbstraction;
 global using Shared.DataTransferObjects.ProductDTO;
+using Microsoft.Extensions.Options;
+using Shared;
 namespace Presentation.Controllers;
 [ApiController]
 [Route("api/[Controller]")] 
@@ -8,9 +10,9 @@ public class ProductsController(IServiceManager serviceManager)
     : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAllProducts(int? brandId, int? typeId)
+    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAllProducts(int? brandId, int? typeId, ProductSortingOptions option)
     {
-        var products = await serviceManager.ProductService.GetAllProductsAsync(brandId, typeId);
+        var products = await serviceManager.ProductService.GetAllProductsAsync(brandId, typeId, option);
         return Ok(products);
     }
     [HttpGet("{id}")]
