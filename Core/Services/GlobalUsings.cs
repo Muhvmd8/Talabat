@@ -5,3 +5,5 @@ global using Domain.Models.ProductModule;
 global using Microsoft.Extensions.Configuration;
 global using ServicesAbstractions;
 global using ServicesAbstraction;
+global using Domain.Models;
+global using Microsoft.Extensions.DependencyInjection;

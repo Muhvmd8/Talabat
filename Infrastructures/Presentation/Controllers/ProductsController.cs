@@ -5,7 +5,7 @@ public class ProductsController(IServiceManager serviceManager)
     : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAllProducts(ProductQueryParameters queryParameters)
+    public async Task<ActionResult<PaginatedResult<ProductResponse>>> GetAllProducts([FromQuery]ProductQueryParameters queryParameters)
     {
         var products = await serviceManager.ProductService.GetAllProductsAsync(queryParameters);
         return Ok(products);

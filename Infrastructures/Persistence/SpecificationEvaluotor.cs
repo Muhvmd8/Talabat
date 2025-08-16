@@ -15,11 +15,13 @@ internal static class SpecificationEvaluotor
         if (specifications.OrderByDescending is not null)
             query = query.OrderByDescending(specifications.OrderByDescending);
 
-
         if (specifications.Includes is not null && specifications.Includes.Count > 0)
             query = specifications.Includes
                 .Aggregate(query, (currQuery, inculeExp)
                     => currQuery.Include(inculeExp));
+
+        if (specifications.IsPaginated)
+            query = query.Skip(specifications.Skip).Take(specifications.Take);
 
         return query;
     }

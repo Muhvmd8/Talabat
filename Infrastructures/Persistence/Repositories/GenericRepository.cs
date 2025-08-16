@@ -1,4 +1,6 @@
-﻿namespace Persistence.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Persistence.Repositories;
 public class GenericRepository<TEntity, TKey>(StoredDbContext _dbContext)
     : IGenericRepository<TEntity, TKey>
       where TEntity : BaseEntity<TKey>
@@ -12,4 +14,6 @@ public class GenericRepository<TEntity, TKey>(StoredDbContext _dbContext)
     public async Task Add(TEntity entity) => await _dbContext.Set<TEntity>().AddAsync(entity);
     public void Update(TEntity entity) => _dbContext.Set<TEntity>().Update(entity);
     public void Delete(TEntity entity) => _dbContext.Set<TEntity>().Remove(entity);
+    public async Task<int> Count(ISpecifications<TEntity, TKey> specifications)
+        => await SpecificationEvaluotor.CreateQuery(_dbContext.Set<TEntity>(), specifications).CountAsync();
 }
