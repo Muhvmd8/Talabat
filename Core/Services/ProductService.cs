@@ -1,7 +1,4 @@
-﻿global using Services.Specifications;
-using Domain.Exceptions;
-using Shared;
-namespace Services;
+﻿namespace Services;
 public class ProductService(IUnitOfWork unitOfWork, IMapper mapper) : IProductService
 {
     public async Task<PaginatedResult<ProductResponse>> GetAllProductsAsync(ProductQueryParameters queryParameters)

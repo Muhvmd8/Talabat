@@ -7,3 +7,7 @@ global using ServicesAbstractions;
 global using ServicesAbstraction;
 global using Domain.Models;
 global using Microsoft.Extensions.DependencyInjection;
+global using Domain.Models.BasketModule;
+global using Shared.DataTransferObjects.BasketDTO;
+global using Services.Specifications;
+global using Domain.Exceptions;

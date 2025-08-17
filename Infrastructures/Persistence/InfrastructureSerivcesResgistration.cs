@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Persistence.Repositories;
-
+﻿global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Persistence.Repositories;
 namespace Persistence;
 public static class InfrastructureSerivcesResgistration
 {
@@ -14,7 +13,12 @@ public static class InfrastructureSerivcesResgistration
         });
         services.AddScoped<IDbInitializer, DbInitializer>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+        services.AddScoped<IBasketRepository, BasketRepository>();
+        services.AddSingleton<IConnectionMultiplexer>((_) =>
+        {
+            var connectionString = configuration.GetConnectionString("RedisConnection");
+            return ConnectionMultiplexer.Connect(connectionString!);
+        });
         return services;
     }
 }

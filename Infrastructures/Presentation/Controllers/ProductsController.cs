@@ -1,8 +1,6 @@
 ﻿namespace Presentation.Controllers;
-[ApiController]
-[Route("api/[Controller]")] 
 public class ProductsController(IServiceManager serviceManager)
-    : ControllerBase
+    : ApiController
 {
     [HttpGet]
     public async Task<ActionResult<PaginatedResult<ProductResponse>>> GetAllProducts([FromQuery]ProductQueryParameters queryParameters)

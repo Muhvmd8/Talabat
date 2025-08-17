@@ -1,4 +1,3 @@
-global using Persistence;
 namespace E_Commerce.Web;
 public class Program
 {
@@ -28,8 +27,6 @@ public class Program
         #endregion
 
         app.Run();
-
-
     }
 
 }

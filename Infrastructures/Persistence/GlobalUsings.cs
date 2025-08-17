@@ -6,3 +6,5 @@ global using Presentation.Data.Context;
 global using System.Text.Json;
 global using Persistence;
 global using Domain.Models;
+global using Domain.Models.BasketModule;
+global using StackExchange.Redis;

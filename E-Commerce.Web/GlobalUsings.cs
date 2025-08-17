@@ -10,3 +10,7 @@ global using Shared.ErrorsModels;
 global using E_Commerce.Web.CustomMiddlewares;
 global using Domain.Exceptions;
 global using E_Commerce.Web.Factories;
+global using Persistence;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+
