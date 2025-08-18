@@ -24,19 +24,20 @@ public class CustomExceptionHandlerMiddlewares
     private static async Task _HandleExceptionAsync(HttpContext httpContext, Exception ex)
     {
         // Set status code for the response.
-        //httphttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-        var statusCode = httpContext.Response.StatusCode = ex switch
-        {
-            NotFoundException => StatusCodes.Status404NotFound,
-            _ => StatusCodes.Status500InternalServerError // Default
-        };
         // Set content type as a json
-        httpContext.Response.ContentType = "application/json";
+        //httpContext.Response.ContentType = "application/json";
         // Response object 
         var response = new ErrorResponse
         {
-            StatusCode = statusCode,
             ErrorMessage = ex.Message
+        };
+        //httphttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        response.StatusCode = httpContext.Response.StatusCode = ex switch
+        {
+            NotFoundException => StatusCodes.Status404NotFound,
+            UnauthorizedException => StatusCodes.Status401Unauthorized,
+            BadRequestException badRequestException => _GetBadRequestErrors(badRequestException, response),
+            _ => StatusCodes.Status500InternalServerError // Default
         };
         // Return object as JSON
         await httpContext.Response.WriteAsJsonAsync(response); // Selialize => Write
@@ -53,5 +54,10 @@ public class CustomExceptionHandlerMiddlewares
 
             await httpContext.Response.WriteAsJsonAsync(respone);
         }
+    }
+    private static int _GetBadRequestErrors(BadRequestException badRequestException, ErrorResponse response)
+    {
+        response.Errors = badRequestException.Errors;
+        return StatusCodes.Status400BadRequest;
     }
 }

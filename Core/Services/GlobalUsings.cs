@@ -11,3 +11,6 @@ global using Domain.Models.BasketModule;
 global using Shared.DataTransferObjects.BasketDTO;
 global using Services.Specifications;
 global using Domain.Exceptions;
+global using Domain.Models.IdentityModule;
+global using Microsoft.AspNetCore.Identity;
+global using Shared.DataTransferObjects.IdentityDTO;

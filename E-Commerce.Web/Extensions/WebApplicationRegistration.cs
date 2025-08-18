@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
-
-namespace E_Commerce.Web.Extensions;
+﻿namespace E_Commerce.Web.Extensions;
 public static class WebApplicationRegistration
 {
     public async static Task InitializeDbAsync(this WebApplication app)
     {
         // Create scope 
         var scope = app.Services.CreateScope();
-        var dbInitializer = scope.ServiceProvider
-            .GetRequiredService<IDbInitializer>();
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
         await dbInitializer.InitializeAsync();
+        await dbInitializer.InitializeIdentityAsync();
     }
     public static IApplicationBuilder UseCustomExceptionMiddleware(this IApplicationBuilder app)
     {

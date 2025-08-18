@@ -1,5 +1,10 @@
-﻿namespace Persistence.Repositories;
-public class DbInitializer(StoredDbContext _dbContext) : IDbInitializer
+﻿using Persistence.Identity;
+
+namespace Persistence.Repositories;
+public class DbInitializer(StoredDbContext _dbContext,
+    StoreIdentityDbContext _identityDbContext,
+    UserManager<ApplicationUser> _userManager,
+    RoleManager<IdentityRole> _roleManager) : IDbInitializer
 {
     public async Task InitializeAsync()
     {
@@ -50,5 +55,51 @@ public class DbInitializer(StoredDbContext _dbContext) : IDbInitializer
 		{
             Console.WriteLine(ex.Message);   
 		}
+    }
+
+    public async Task InitializeIdentityAsync()
+    {
+        try
+        {
+            if ((await _identityDbContext.Database.GetPendingMigrationsAsync()).Any())
+            {
+                await _identityDbContext.Database.MigrateAsync();
+            }
+
+            if (!_roleManager.Roles.Any())
+            {
+                await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                await _roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
+            }
+
+            if (!_userManager.Users.Any())
+            {
+                var user1 = new ApplicationUser
+                {
+                    Email = "ma7007167@gmail.com",
+                    DisplayName = "Mohamed Anwer",
+                    PhoneNumber = "01095181541",
+                    UserName = "Muhvmd_4"
+                };
+                var user2 = new ApplicationUser
+                {
+                    Email = "mo@gmail.com",
+                    DisplayName = "Mohamed hany",
+                    PhoneNumber = "01234567891",
+                    UserName = "Muhvmd_5"
+                };
+
+                await _userManager.CreateAsync(user1, "Muhvmd_442004");
+                await _userManager.CreateAsync(user2, "Muhvmd_442004");
+                await _userManager.AddToRoleAsync(user1, "SuperAdmin");
+                await _userManager.AddToRoleAsync(user2, "Admin");
+            }
+
+            await _identityDbContext.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 }
