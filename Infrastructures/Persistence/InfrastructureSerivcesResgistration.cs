@@ -22,7 +22,10 @@ public static class InfrastructureSerivcesResgistration
         services.AddScoped<IDbInitializer, DbInitializer>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IBasketRepository, BasketRepository>();
-        services.AddIdentityCore<ApplicationUser>()
+        services.AddIdentityCore<ApplicationUser>(options =>
+        {
+            options.User.RequireUniqueEmail = true; // <--- this enforces unique emails
+        })
           .AddRoles<IdentityRole>()
           .AddEntityFrameworkStores<StoreIdentityDbContext>();
         return services;

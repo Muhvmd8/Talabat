@@ -14,3 +14,8 @@ global using Domain.Exceptions;
 global using Domain.Models.IdentityModule;
 global using Microsoft.AspNetCore.Identity;
 global using Shared.DataTransferObjects.IdentityDTO;
+global using System.Security.Claims;
+global using Microsoft.IdentityModel.Tokens;
+global using System.IdentityModel.Tokens.Jwt;
+global using Microsoft.EntityFrameworkCore;
+global using System.Text;

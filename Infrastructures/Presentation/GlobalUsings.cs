@@ -3,3 +3,6 @@ global using ServicesAbstraction;
 global using Shared.DataTransferObjects.ProductDTO;
 global using Shared;
 global using Shared.DataTransferObjects.BasketDTO;
+global using Shared.DataTransferObjects.IdentityDTO;
+global using Microsoft.AspNetCore.Authorization;
+global using System.Security.Claims;

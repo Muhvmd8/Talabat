@@ -11,6 +11,7 @@ public class Program
         builder.Services.AddInfrastructureSerivces(builder.Configuration);
         builder.Services.AddApplicationService();
         builder.Services.AddWebApplicationServices();
+        builder.Services.AddJWTService(builder.Configuration);
         #endregion
 
         var app = builder.Build(); 
