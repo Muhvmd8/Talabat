@@ -6,3 +6,4 @@ global using Shared.DataTransferObjects.BasketDTO;
 global using Shared.DataTransferObjects.IdentityDTO;
 global using Microsoft.AspNetCore.Authorization;
 global using System.Security.Claims;
+global using Shared.DataTransferObjects.OrderDTO;

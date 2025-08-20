@@ -12,5 +12,9 @@ public class OrderProfile : Profile
         CreateMap<OrderItem, OrderItemDto>()
             .ForMember(d => d.ProductName, o => o.MapFrom(s => s.Product.ProductName))
             .ForMember(d => d.PictureUrl, o => o.MapFrom<OrderItemPictureUrlResolver>());
+
+        CreateMap<DeliveryMethod, DeliveryMethodResponse>()
+            .ForMember(d => d.DeliveryTime, dm => dm
+            .MapFrom(s => s.DeliveryTime.ToString()));
     }
 }

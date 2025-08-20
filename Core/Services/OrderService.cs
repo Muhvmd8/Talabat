@@ -46,6 +46,29 @@ public class OrderService(IMapper _mapper, IUnitOfWork _unitOfWork, IBasketRepos
 
         return _mapper.Map<Order, OrderResponse>(order);
     }
+    public async Task<IEnumerable<DeliveryMethodResponse>> GetAllDeliveryMethodsAsync()
+    {
+        var deliverMethodRepository = _unitOfWork.GetRepository<DeliveryMethod, int>();
+        var deliveryMethods = await deliverMethodRepository.GetAllAsync();
+        return _mapper.Map<IEnumerable<DeliveryMethod>, IEnumerable<DeliveryMethodResponse>>(deliveryMethods);
+    }
+    public async Task<IEnumerable<OrderResponse>> GetAllOrdersAsync(string email)
+    {
+        var orderRepository = _unitOfWork.GetRepository<Order, Guid>();
+        var specifications = new OrderSpecifications(email);
+        var orders = await orderRepository.GetAllAsync(specifications);
+        return _mapper.Map<IEnumerable<Order>, IEnumerable<OrderResponse>>(orders); 
+    }
+    public async Task<OrderResponse> GetOrderAsync(Guid orderId)
+    {
+        var orderRepository = _unitOfWork.GetRepository<Order, Guid>();
+
+        var specifications = new OrderSpecifications(orderId);
+        var order = await orderRepository.GetByIdAsync(specifications) ?? 
+                throw new OrderNotFoundException(orderId);
+
+        return _mapper.Map<Order, OrderResponse>(order);
+    }
     private static OrderItem _CreateOrderItem(BasketItem item, Product product)
         => new OrderItem
            {

@@ -18,24 +18,21 @@ public class AuthenticationController(IServiceManager serviceManager)
     [HttpGet("CurrentUser")]
     public async Task<ActionResult<UserDto>> GetCurrentUser()
     {
-        var email = User.FindFirstValue(ClaimTypes.Email);
-        var user = await serviceManager.AuthenticationService.GetCurrentUserAsync(email!);
+        var user = await serviceManager.AuthenticationService.GetCurrentUserAsync(GetEmailFromToken());
         return Ok(user);
     }
     [Authorize]
     [HttpGet("UserAddress")]
     public async Task<ActionResult<AddressDto>> GetCurrentUserAddress()
     {
-        var email = User.FindFirstValue(ClaimTypes.Email);
-        var address = await serviceManager.AuthenticationService.GetCurrentUserAddressAsync(email!);
+        var address = await serviceManager.AuthenticationService.GetCurrentUserAddressAsync(GetEmailFromToken());
         return Ok(address);
     }
     [Authorize]
     [HttpPost("UpdateUserAddress")]
     public async Task<ActionResult<AddressDto>> UpdateCurrentUserAddress(AddressDto addressDto)
     {
-        var email = User.FindFirstValue(ClaimTypes.Email);
-        var address = await serviceManager.AuthenticationService.UpdateCurrentUserAddressAsync(email!, addressDto);
+        var address = await serviceManager.AuthenticationService.UpdateCurrentUserAddressAsync(GetEmailFromToken(), addressDto);
         return Ok(address);
     }
     [HttpGet("CheckEmail")]
