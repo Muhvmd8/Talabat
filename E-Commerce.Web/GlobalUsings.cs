@@ -1,16 +1,15 @@
 ﻿global using Domain.Contracts;
-global using Microsoft.EntityFrameworkCore;
-global using Persistence.Repositories;
-global using Presentation.Data.Context;
 global using E_Commerce.Web.Extensions;
 global using Services;
-global using ServicesAbstraction;
 global using Microsoft.AspNetCore.Mvc;
 global using Shared.ErrorsModels;
 global using E_Commerce.Web.CustomMiddlewares;
 global using Domain.Exceptions;
 global using E_Commerce.Web.Factories;
 global using Persistence;
-global using Microsoft.Extensions.Configuration;
-global using Microsoft.Extensions.DependencyInjection;
-
+global using Swashbuckle.AspNetCore.SwaggerUI;
+global using System.Text.Json;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.OpenApi.Models;
+global using System.Text;

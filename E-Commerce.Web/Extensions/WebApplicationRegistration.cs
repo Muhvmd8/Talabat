@@ -17,7 +17,19 @@ public static class WebApplicationRegistration
     public static IApplicationBuilder UseSwaggerMiddlewares(this IApplicationBuilder app)
     {
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(options =>
+        {
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Talabat v1");
+            options.DisplayRequestDuration();
+            options.DocumentTitle = "Talabat";
+            options.DocExpansion(DocExpansion.None);
+            options.JsonSerializerOptions = new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+            options.EnableFilter();
+            options.EnablePersistAuthorization();
+        });
         return app;
     }
     public static IApplicationBuilder UseApplicationMiddlewares(this WebApplication app)
