@@ -1,6 +1,4 @@
-﻿using Shared.DataTransferObjects.IdentityDTO;
-
-namespace Shared.DataTransferObjects.OrderDTO;
+﻿namespace Shared.DataTransferObjects.OrderDTO;
 public class OrderDto
 {
     public string BasketId { get; set; } = default!;
