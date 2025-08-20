@@ -16,6 +16,16 @@ public class DbInitializer(StoredDbContext _dbContext,
 
             // Read data for in json and deserialize it.
             // Then add to DbSets
+            if (!_dbContext.DeliveryMethods.Any())
+            {
+                var deliverMethods = File.OpenRead(@"..\Infrastructures\Persistence\Data\Seeding\delivery.json");
+
+                var orderDeliverMethods = await JsonSerializer.DeserializeAsync<List<DeliveryMethod>>(deliverMethods);
+                if (orderDeliverMethods is not null && orderDeliverMethods.Any())
+                {
+                    await _dbContext.AddRangeAsync(orderDeliverMethods);
+                }
+            }
             if (!_dbContext.ProductBrands.Any())
             {
                 var brands = File.OpenRead(@"..\Infrastructures\Persistence\Data\Seeding\brands.json");
@@ -56,7 +66,6 @@ public class DbInitializer(StoredDbContext _dbContext,
             Console.WriteLine(ex.Message);   
 		}
     }
-
     public async Task InitializeIdentityAsync()
     {
         try
@@ -95,7 +104,7 @@ public class DbInitializer(StoredDbContext _dbContext,
                 await _userManager.AddToRoleAsync(user2, "Admin");
             }
 
-            await _identityDbContext.SaveChangesAsync();
+            //await _identityDbContext.SaveChangesAsync(); // Not needed
         }
         catch (Exception ex)
         {

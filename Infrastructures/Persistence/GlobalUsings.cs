@@ -15,3 +15,4 @@ global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Persistence.Repositories;
 global using Persistence.Identity;
+global using Domain.Models.OrderModule;

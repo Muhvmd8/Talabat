@@ -19,3 +19,5 @@ global using Microsoft.IdentityModel.Tokens;
 global using System.IdentityModel.Tokens.Jwt;
 global using Microsoft.EntityFrameworkCore;
 global using System.Text;
+global using Domain.Models.OrderModule;
+global using Shared.DataTransferObjects.OrderDTO;

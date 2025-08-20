@@ -6,7 +6,7 @@ public class AuthenticationController(IServiceManager serviceManager)
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
         var user = await serviceManager.AuthenticationService.LoginAsync(loginDto);
-        return Ok(user); 
+        return Ok(user);
     }
     [HttpPost("Register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
@@ -15,6 +15,7 @@ public class AuthenticationController(IServiceManager serviceManager)
         return Ok(user);
     }
     [Authorize]
+    [HttpGet("CurrentUser")]
     public async Task<ActionResult<UserDto>> GetCurrentUser()
     {
         var email = User.FindFirstValue(ClaimTypes.Email);
@@ -38,7 +39,7 @@ public class AuthenticationController(IServiceManager serviceManager)
         return Ok(address);
     }
     [HttpGet("CheckEmail")]
-    public async Task<ActionResult<bool>> CheckEmail(string email)
+    public async Task<ActionResult<bool>> CheckEmail([FromQuery] string email)
     {
         var result = await serviceManager.AuthenticationService.CheckEmailAsync(email);
         return Ok(result);
