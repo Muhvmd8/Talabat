@@ -30,6 +30,11 @@ public static class ApplicationSerivcesResgistration
         services.AddScoped<Func<IOrderService>>(provider =>
             () => provider.GetRequiredService<IOrderService>()
         );
+
+        services.AddScoped<ICacheService, CacheService>();
+        services.AddScoped<Func<ICacheService>>(provider =>
+            () => provider.GetRequiredService<ICacheService>()
+        );
         #endregion
 
         return services;

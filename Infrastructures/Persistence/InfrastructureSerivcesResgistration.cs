@@ -22,6 +22,7 @@ public static class InfrastructureSerivcesResgistration
         services.AddScoped<IDbInitializer, DbInitializer>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IBasketRepository, BasketRepository>();
+        services.AddScoped<ICacheRepository, CacheRepository>();
         services.AddIdentityCore<ApplicationUser>(options =>
         {
             options.User.RequireUniqueEmail = true; // <--- this enforces unique emails

@@ -1,8 +1,10 @@
-﻿namespace Presentation.Controllers;
+﻿using Presentation.Attributes;
+namespace Presentation.Controllers;
 public class ProductsController(IServiceManager serviceManager)
     : ApiController
 {
     [HttpGet]
+    [Cache]
     public async Task<ActionResult<PaginatedResult<ProductResponse>>> GetAllProducts([FromQuery]ProductQueryParameters queryParameters)
     {
         var products = await serviceManager.ProductService.GetAllProductsAsync(queryParameters);
